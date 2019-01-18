@@ -1,22 +1,10 @@
 {
-    "name": "nfephp-org/sped-da",
+    "name": "rlacerda83/sped-da",
     "type": "library",
     "description": "sped-da contêm as classes para criação dos documentos auxiliares referidos no projeto Sped.",
     "keywords": ["nfe", "sped", "nfephp", "Danfe", "Dacte", "CCe" ],
     "homepage": "https://github.com/nfephp-org/sped-da",
     "license": ["LGPL-3.0-or-later+", "GPL-3.0-or-later", "MIT"],
-    "authors": [
-        {
-            "name": "Roberto L. Machado",
-            "email": "linux.rlm@gmail.com.br",
-            "homepage": "http://www.nfephp.org",
-            "role": "Developer"
-        },
-        {
-            "name": "Comunidade NFePHP",
-            "homepage": "https://github.com/nfephp-org/sped-da/graphs/contributors"
-        }
-    ],
     "require": {
         "php" : ">= 7.0",
         "tecnickcom/tc-lib-barcode": "^1.15"
