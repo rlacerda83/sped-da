@@ -119,8 +119,8 @@ class DacteV3 extends Common
         $fonteDACTE = '',
         $mododebug = 2,
         $preVisualizar = false,
-        $nomeDesenvolvedor = 'Powered by NFePHP (GNU/GPLv3 GNU/LGPLv3) © www.nfephp.org',
-        $siteDesenvolvedor = 'http://www.nfephp.org'
+        $nomeDesenvolvedor = 'Gerado por Jettax © www.jettax.com.br',
+        $siteDesenvolvedor = 'https://www.jettax.com.br'
     ) {
 
         if (is_numeric($mododebug)) {
@@ -1745,6 +1745,8 @@ class DacteV3 extends Common
         $y += 8;
         $x = $oldX;
         $this->pdf->Line($x, $y, $w + 1, $y);
+
+        $qCarga = 0;
         //Identifica código da unidade
         //01 = KG (QUILOS)
         if ($this->pSimpleGetValue($this->infQ->item(0), "cUnid") == '01') {
