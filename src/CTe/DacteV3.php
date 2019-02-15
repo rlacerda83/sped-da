@@ -119,7 +119,7 @@ class DacteV3 extends Common
         $fonteDACTE = '',
         $mododebug = 2,
         $preVisualizar = false,
-        $nomeDesenvolvedor = 'Gerado por Jettax © www.jettax.com.br',
+        $nomeDesenvolvedor = 'Jettax',
         $siteDesenvolvedor = 'https://www.jettax.com.br'
     ) {
 
