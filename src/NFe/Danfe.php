@@ -859,6 +859,7 @@ class Danfe extends Common
         }
         $texto = trim($parte1).' '.trim($parte3);
         if (strpos($parte2, '<CDATA>') === false) {
+            $parte2 = str_replace('<', '', $parte2);
             $cdata = '<CDATA>'.$parte2.'</CDATA>';
         } else {
             $cdata = $parte2;
