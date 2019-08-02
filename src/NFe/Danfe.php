@@ -1276,12 +1276,12 @@ class Danfe extends Common
             } else {
                 if (isset($this->nfeProc)) {
                     $texto = ! empty($this->nfeProc->getElementsByTagName("nProt")->item(0)->nodeValue) ?
-                            $this->nfeProc->getElementsByTagName("nProt")->item(0)->nodeValue : '';
-                    $tsHora = $this->pConvertTime($this->nfeProc->getElementsByTagName("dhRecbto")->item(0)->nodeValue);
-                    if ($texto != '') {
+                        $this->nfeProc->getElementsByTagName("nProt")->item(0)->nodeValue : '';
+                    $tsHora = $this->pConvertTime($this->nfeProc->getElementsByTagName("dhRecbto")->item(0)->nodeValue ?? "");
+                    if ($texto != '' && $tsHora != "") {
                         $texto .= "  -  " . date('d/m/Y H:i:s', $tsHora);
                     }
-                    $cStat = $this->nfeProc->getElementsByTagName("cStat")->item(0)->nodeValue;
+                    $cStat = $this->nfeProc->getElementsByTagName("cStat")->item(0)->nodeValue ?? '';
                 } else {
                     $texto = '';
                     $cStat = '';
