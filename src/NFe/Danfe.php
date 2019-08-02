@@ -846,6 +846,13 @@ class Danfe extends Common
                 break;
             }
         }
+
+        if (!isset($endPos)) {
+            $len ++;
+            $cdata .= '>';
+            $endPos = $len -1;
+        }
+
         if ($startPos > 0) {
             $parte1 = substr($cdata, 0, $startPos);
         } else {
