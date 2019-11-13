@@ -2757,6 +2757,7 @@ class Danfe extends Common
 
         // Tabela Renavam Combustivel
         $renavamCombustivel = array(
+            0=>'INDEFINIDO',
             1=>'ALCOOL',
             2=>'GASOLINA',
             3=>'DIESEL',
