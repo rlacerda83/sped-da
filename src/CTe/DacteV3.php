@@ -2942,7 +2942,7 @@ class DacteV3 extends Common
         $texto = 'IDENTIFICAÇÃO DOS CONTEINERS';
         $aFont = $this->formatPadrao;
         $this->pTextBox($x, $y, $w * 0.23, $h, $texto, $aFont, 'T', 'L', 0, '');
-        if ($this->infNF->item(0) !== null && $this->infNF->item(0)->getElementsByTagName('infUnidCarga') !== null) {
+        if ($this->infNF->item(0) !== null && $this->infNF->item(0)->getElementsByTagName('infUnidCarga')->length > 0) {
             $texto = $this->infNF
                 ->item(0)
                 ->getElementsByTagName('infUnidCarga')
@@ -2950,7 +2950,7 @@ class DacteV3 extends Common
                 ->getElementsByTagName('idUnidCarga')
                 ->item(0)->nodeValue;
         } elseif ($this->infNFe->item(0) !== null
-            && $this->infNFe->item(0)->getElementsByTagName('infUnidCarga') !== null
+            && $this->infNFe->item(0)->getElementsByTagName('infUnidCarga')->length > 0
         ) {
             $texto = $this->infNFe
                 ->item(0)
