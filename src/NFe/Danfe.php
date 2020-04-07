@@ -875,7 +875,13 @@ class Danfe extends Common
         $cdata = str_replace('<FONTE IBPT>', '', $cdata);
         //carrega o xml CDATA em um objeto DOM
         $dom = new Dom();
-        $dom->loadXML($cdata, LIBXML_NOBLANKS | LIBXML_NOEMPTYTAG);
+
+        try{
+            $dom->loadXML($cdata, LIBXML_NOBLANKS | LIBXML_NOEMPTYTAG);
+        } catch (\Throwable $e) {
+            $dom = new Dom();
+        }
+
         //$xml = $dom->saveXML();
         //grupo CDATA infADprod
         $id = $dom->getElementsByTagName('id')->item(0);
