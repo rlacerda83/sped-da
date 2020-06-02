@@ -2178,38 +2178,42 @@ class DacteV3 extends Common
      */
     protected function zGeraChaveAdicCont()
     {
-        //cUF tpEmis CNPJ vNF ICMSp ICMSs DD  DV
-        // Quantidade de caracteres  02   01      14  14    01    01  02 01
-        $forma = "%02d%d%s%014d%01d%01d%02d";
-        $cUF = $this->ide->getElementsByTagName('cUF')->item(0)->nodeValue;
-        $CNPJ = "00000000000000" . $this->emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
-        $CNPJ = substr($CNPJ, -14);
-        $vCT = number_format($this->pSimpleGetValue($this->vPrest, "vRec"), 2, "", "") * 100;
-        $ICMS_CST = $this->pSimpleGetValue($this->ICMS, "CST");
-        switch ($ICMS_CST) {
-            case '00':
-            case '20':
-                $ICMSp = '1';
-                $ICMSs = '2';
-                break;
-            case '40':
-            case '41':
-            case '51':
-            case '90':
-                $ICMSp = '2';
-                $ICMSs = '2';
-                break;
-            case '60':
-                $ICMSp = '2';
-                $ICMSs = '1';
-                break;
+        try {
+            //cUF tpEmis CNPJ vNF ICMSp ICMSs DD  DV
+            // Quantidade de caracteres  02   01      14  14    01    01  02 01
+            $forma = "%02d%d%s%014d%01d%01d%02d";
+            $cUF = $this->ide->getElementsByTagName('cUF')->item(0)->nodeValue;
+            $CNPJ = "00000000000000" . $this->emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+            $CNPJ = substr($CNPJ, -14);
+            $vCT = number_format($this->pSimpleGetValue($this->vPrest, "vRec"), 2, "", "") * 100;
+            $ICMS_CST = $this->pSimpleGetValue($this->ICMS, "CST");
+            switch ($ICMS_CST) {
+                case '00':
+                case '20':
+                    $ICMSp = '1';
+                    $ICMSs = '2';
+                    break;
+                case '40':
+                case '41':
+                case '51':
+                case '90':
+                    $ICMSp = '2';
+                    $ICMSs = '2';
+                    break;
+                case '60':
+                    $ICMSp = '2';
+                    $ICMSs = '1';
+                    break;
+            }
+            $dd = $this->ide->getElementsByTagName('dEmi')->item(0)->nodeValue;
+            $rpos = strrpos($dd, '-');
+            $dd = substr($dd, $rpos + 1);
+            $chave = sprintf($forma, $cUF, $this->tpEmis, $CNPJ, $vCT, $ICMSp, $ICMSs, $dd);
+            $chave = $chave . $this->pModulo11($chave);
+            return $chave;
+        } catch (\Exception $error) {
+            return '';
         }
-        $dd = $this->ide->getElementsByTagName('dEmi')->item(0)->nodeValue;
-        $rpos = strrpos($dd, '-');
-        $dd = substr($dd, $rpos + 1);
-        $chave = sprintf($forma, $cUF, $this->tpEmis, $CNPJ, $vCT, $ICMSp, $ICMSs, $dd);
-        $chave = $chave . $this->pModulo11($chave);
-        return $chave;
     } //fim zGeraChaveAdicCont
 
     /**
