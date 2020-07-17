@@ -3281,7 +3281,13 @@ class Danfe extends Common
         // Quantidade de caracteres  02   01      14  14    01    01  02 01
         $forma  = "%02d%d%s%014d%01d%01d%02d";
         $cUF    = $this->ide->getElementsByTagName('cUF')->item(0)->nodeValue;
-        $CNPJ   = "00000000000000" . $this->emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+
+        try{
+            $CNPJ   = "00000000000000" . $this->emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        } catch (\Exception $error) {
+            $CNPJ   = "00000000000000";
+        }
+
         $CNPJ   = substr($CNPJ, -14);
         $vNF    = $this->ICMSTot->getElementsByTagName("vNF")->item(0)->nodeValue * 100;
         $vICMS  = $this->ICMSTot->getElementsByTagName("vICMS")->item(0)->nodeValue;
