@@ -2583,12 +2583,15 @@ class Danfe extends Common
                 $imposto = $this->det->item($i)->getElementsByTagName("imposto")->item(0);
                 $ICMS = $imposto->getElementsByTagName("ICMS")->item(0);
                 $IPI  = $imposto->getElementsByTagName("IPI")->item(0);
-                $textoProduto = $this->pDescricaoProduto($thisItem);
+                $textoProduto = trim($this->pDescricaoProduto($thisItem));
                 $linhaDescr = $this->pGetNumLines($textoProduto, $w2, $aFont);
                 $h = round(($linhaDescr * $this->pdf->fontSize)+ ($linhaDescr * 0.5), 2);
                 $hUsado += $h;
+
+                $diffH = $hmax - $hUsado;
+
                 if ($pag != $totpag) {
-                    if ($hUsado >= $hmax && $i < $totItens) {
+                    if (1 > $diffH && $i < $totItens) {
                         //ultrapassa a capacidade para uma única página
                         //o restante dos dados serão usados nas proximas paginas
                         $nInicio = $i;
