@@ -2744,8 +2744,9 @@ class Danfe extends Common
      * @param float  $h    altura do campo
      * @param object $prod Contendo todos os dados do item
      * @param $nInicio
+     * @param $print
      */
-    protected function pDadosItenVeiculoDANFE($x, $y, $h, $prod, &$nInicio)
+    protected function pDadosItenVeiculoDANFE($x, $y, $h, $prod, &$nInicio, $print = false)
     {
         $oldX = $x;
         $oldY = $y;
@@ -2832,83 +2833,85 @@ class Danfe extends Common
             'P'=>'PEROLIZADA'
         );
 
+        if ($print) {
+            $veicProd = $prod->getElementsByTagName("veicProd")->item(0);
 
+            $veiculoChassi = $veicProd->getElementsByTagName("chassi")->item(0)->nodeValue;
+            $veiculoCor = $veicProd->getElementsByTagName("xCor")->item(0)->nodeValue;
+            $veiculoCilindrada = $veicProd->getElementsByTagName("cilin")->item(0)->nodeValue;
+            $veiculoCmkg = $veicProd->getElementsByTagName("CMT")->item(0)->nodeValue;
+            $veiculoTipo = $veicProd->getElementsByTagName("tpVeic")->item(0)->nodeValue;
 
-        $veicProd = $prod->getElementsByTagName("veicProd")->item(0);
+            $veiculoMotor = $veicProd->getElementsByTagName("nMotor")->item(0)->nodeValue;
+            $veiculoRenavam = $veicProd->getElementsByTagName("cMod")->item(0)->nodeValue;
+            $veiculoHp = $veicProd->getElementsByTagName("pot")->item(0)->nodeValue;
+            $veiculoPlaca = ''; //$veiculo->getElementsByTagName("CMT")->item(0)->nodeValue;
+            $veiculoTipoPintura = $veicProd->getElementsByTagName("tpPint")->item(0)->nodeValue;
 
-        $veiculoChassi = $veicProd->getElementsByTagName("chassi")->item(0)->nodeValue;
-        $veiculoCor = $veicProd->getElementsByTagName("xCor")->item(0)->nodeValue;
-        $veiculoCilindrada = $veicProd->getElementsByTagName("cilin")->item(0)->nodeValue;
-        $veiculoCmkg = $veicProd->getElementsByTagName("CMT")->item(0)->nodeValue;
-        $veiculoTipo = $veicProd->getElementsByTagName("tpVeic")->item(0)->nodeValue;
+            $veiculoMarcaModelo = $prod->getElementsByTagName("xProd")->item(0)->nodeValue;
+            $veiculoEspecie = $veicProd->getElementsByTagName("espVeic")->item(0)->nodeValue;
+            $veiculoCombustivel = $veicProd->getElementsByTagName("tpComb")->item(0)->nodeValue;
+            $veiculoSerial = $veicProd->getElementsByTagName("nSerie")->item(0)->nodeValue;
+            $veiculoFabricacao = $veicProd->getElementsByTagName("anoFab")->item(0)->nodeValue;
+            $veiculoModelo = $veicProd->getElementsByTagName("anoMod")->item(0)->nodeValue;
 
-        $veiculoMotor = $veicProd->getElementsByTagName("nMotor")->item(0)->nodeValue;
-        $veiculoRenavam = $veicProd->getElementsByTagName("cMod")->item(0)->nodeValue;
-        $veiculoHp = $veicProd->getElementsByTagName("pot")->item(0)->nodeValue;
-        $veiculoPlaca = ''; //$veiculo->getElementsByTagName("CMT")->item(0)->nodeValue;
-        $veiculoTipoPintura = $veicProd->getElementsByTagName("tpPint")->item(0)->nodeValue;
+            $veiculoDistancia = $veicProd->getElementsByTagName("dist")->item(0)->nodeValue;
 
-        $veiculoMarcaModelo = $prod->getElementsByTagName("xProd")->item(0)->nodeValue;
-        $veiculoEspecie = $veicProd->getElementsByTagName("espVeic")->item(0)->nodeValue;
-        $veiculoCombustivel = $veicProd->getElementsByTagName("tpComb")->item(0)->nodeValue;
-        $veiculoSerial = $veicProd->getElementsByTagName("nSerie")->item(0)->nodeValue;
-        $veiculoFabricacao = $veicProd->getElementsByTagName("anoFab")->item(0)->nodeValue;
-        $veiculoModelo = $veicProd->getElementsByTagName("anoMod")->item(0)->nodeValue;
+            $x = $oldX;
 
-        $veiculoDistancia = $veicProd->getElementsByTagName("dist")->item(0)->nodeValue;
-
-        $x = $oldX;
-
-        $yVeic = $y + $h;
-        $texto = 'Chassi: ............: ' . $veiculoChassi;
-        $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Cor...................: ' . $veiculoCor;
-        $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Cilindrada........: ' . $veiculoCilindrada;
-        $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Cmkg...............: ' . $veiculoCmkg;
-        $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Tipo.................: ' . $renavamTiposVeiculos[intval($veiculoTipo)];
-        $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic = $y + $h;
-        $xVeic = $x + 65;
-        $texto = 'Nº Motor: .........: ' . $veiculoMotor;
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Renavam...........: ' . $veiculoRenavam;
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'HP.....................: ' . $veiculoHp;
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Placa.................: ' . $veiculoPlaca;
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Tipo Pintura......: ' . ($renavamTipoPintura[$veiculoTipoPintura] ?? $veiculoTipoPintura);
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic = $y + $h;
-        $xVeic = $xVeic + 55;
-        $texto = 'Marca / Modelo.....: ' . $veiculoMarcaModelo;
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Especie..................: ' . $renavamEspecie[intval($veiculoEspecie)];
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Combustivel..........: ' . $renavamCombustivel[intval($veiculoCombustivel)];
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Serial.....................: ' . $veiculoSerial;
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Ano Fab/Mod........: '. $veiculoFabricacao . '/' . $veiculoModelo;
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
-        $yVeic += $h;
-        $texto = 'Distancia Entre Eixos(mm)..: '. $veiculoDistancia;
-        $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic = $y + $h;
+            $texto = 'Chassi: ............: ' . $veiculoChassi;
+            $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Cor...................: ' . $veiculoCor;
+            $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Cilindrada........: ' . $veiculoCilindrada;
+            $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Cmkg...............: ' . $veiculoCmkg;
+            $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Tipo.................: ' . $renavamTiposVeiculos[intval($veiculoTipo)];
+            $this->pTextBox($x, $yVeic, $w1+40, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic = $y + $h;
+            $xVeic = $x + 65;
+            $texto = 'Nº Motor: .........: ' . $veiculoMotor;
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Renavam...........: ' . $veiculoRenavam;
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'HP.....................: ' . $veiculoHp;
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Placa.................: ' . $veiculoPlaca;
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Tipo Pintura......: ' . ($renavamTipoPintura[$veiculoTipoPintura] ?? $veiculoTipoPintura);
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic = $y + $h;
+            $xVeic = $xVeic + 55;
+            $texto = 'Marca / Modelo.....: ' . $veiculoMarcaModelo;
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Especie..................: ' . $renavamEspecie[intval($veiculoEspecie)];
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Combustivel..........: ' . empty($renavamCombustivel[intval($veiculoCombustivel)])
+                ? $renavamCombustivel[0] // reboque por exemplo não utiliza combustível (Indefinido)
+                : $renavamCombustivel[intval($veiculoCombustivel)];
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Serial.....................: ' . $veiculoSerial;
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Ano Fab/Mod........: '. $veiculoFabricacao . '/' . $veiculoModelo;
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+            $yVeic += $h;
+            $texto = 'Distancia Entre Eixos(mm)..: '. $veiculoDistancia;
+            $this->pTextBox($xVeic, $yVeic, $w1+50, $h, $texto, $aFont, 'T', 'L', 0, '');
+        }
     }
 
     /**
