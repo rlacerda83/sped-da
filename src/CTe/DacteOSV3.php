@@ -136,6 +136,8 @@ class DacteOSV3 extends Common
         $this->preVisualizar = $preVisualizar;
         $this->siteDesenvolvedor = $siteDesenvolvedor;
         $this->nomeDesenvolvedor = $nomeDesenvolvedor;
+        $this->lota = 1; //lotação padrão
+
         // verifica se foi passa a fonte a ser usada
         if (!empty($fonteDACTE)) {
             $this->fontePadrao = $fonteDACTE;
@@ -188,7 +190,7 @@ class DacteOSV3 extends Common
             $textoAdic = number_format($vTrib, 2, ",", ".");
 
             $this->textoAdic = "o valor aproximado de tributos incidentes sobre o preço deste serviço é de R$"
-                    .$textoAdic;
+                .$textoAdic;
             $this->toma = $this->dom->getElementsByTagName("toma")->item(0);
             $this->enderToma = $this->pSimpleGetValue($this->toma, "enderToma");
             //modal aquaviário
@@ -388,7 +390,7 @@ class DacteOSV3 extends Common
                     $y += 17.9;
                     $x = $xInic;
                     // TODO fmertins 31/10/14: este método não existe...
-                    $r = $this->zModalAereo($x, $y);
+                    $r = 0;
                     break;
                 case '3':
                     $y += 17.9;
@@ -628,7 +630,7 @@ class DacteOSV3 extends Common
                 $texto = 'Substituto';
                 break;
             default:
-                $texto = 'ERRO' . $tpCTe . $tpServ;
+                $texto = 'ERRO' . $tpCTe;
         }
         $aFont = $this->formatNegrito;
         $this->pTextBox($x, $y1 + 3, $w * 0.5, $h1, $texto, $aFont, 'T', 'C', 0, '', false);
@@ -1527,7 +1529,9 @@ class DacteOSV3 extends Common
 
         $x = $oldX;
         $y = $y + 4;
-        $texto = number_format($this->pSimpleGetValue($this->infQ->item(0), "qCarga"), 3, ",", ".");
+        $qCarga = $this->pSimpleGetValue($this->infQ->item(0), "qCarga");
+
+        $texto = is_int($qCarga) ? number_format($this->pSimpleGetValue($this->infQ->item(0), "qCarga"), 3, ",", ".") : $qCarga;
         $aFont = $this->formatNegrito;
         $this->pTextBox($x, $y, $w * 0.26, $h, $texto, $aFont, 'T', 'L', 0, '');
         $x += $w * 0.26;
@@ -1788,7 +1792,7 @@ class DacteOSV3 extends Common
         $texto = !empty($this->pSimpleGetValue($this->veic->item(0), "CPF")) ?
             $this->pSimpleGetValue($this->veic->item(0), "CPF") :
             (!empty($this->pSimpleGetValue($this->veic->item(0), "CNPJ")) ?
-            $this->pSimpleGetValue($this->veic->item(0), "CNPJ") : '');
+                $this->pSimpleGetValue($this->veic->item(0), "CNPJ") : '');
         $aFont = $this->formatNegrito;
         $this->pTextBox($x, $y, $w * $wCol02, $h, $texto, $aFont, 'T', 'L', 0, '');
 
@@ -2499,7 +2503,7 @@ class DacteOSV3 extends Common
     {
         try {
             $fone = !empty($field->getElementsByTagName("fone")->item(0)->nodeValue) ?
-            $field->getElementsByTagName("fone")->item(0)->nodeValue : '';
+                $field->getElementsByTagName("fone")->item(0)->nodeValue : '';
             $foneLen = strlen($fone);
             if ($foneLen > 0) {
                 $fone2 = substr($fone, 0, $foneLen - 4);
