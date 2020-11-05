@@ -356,6 +356,9 @@ class Danfe extends Common
         }
         //se for passado o xml
         if (! empty($this->xml)) {
+            //remove xmlns
+            $this->xml = str_replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance "', '', $this->xml);
+
             $this->dom = new Dom();
             $this->dom->loadXML($this->xml);
             $this->nfeProc    = $this->dom->getElementsByTagName("nfeProc")->item(0);
