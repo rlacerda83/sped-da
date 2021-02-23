@@ -2212,7 +2212,7 @@ class DacteV3 extends Common
         $dd = substr($dd, $rpos + 1);
         $chave = sprintf($forma, $cUF, $this->tpEmis, $CNPJ, $vCT, $ICMSp, $ICMSs, $dd);
         $chave = $chave . $this->pModulo11($chave);
-        
+
         return $chave;
     } //fim zGeraChaveAdicCont
 
@@ -2966,13 +2966,17 @@ class DacteV3 extends Common
         } elseif ($this->infOutros->item(0) !== null
             && $this->infOutros->item(0)->getElementsByTagName('infUnidCarga') !== null
         ) {
-            $texto = $this->infOutros
+            $texto = '';
+            $conteiners = $this->infOutros
                 ->item(0)
                 ->getElementsByTagName('infUnidCarga')
-                ->item(0)
-                ->getElementsByTagName('idUnidCarga')
-                ->item(0)
-                ->nodeValue;
+                ->item(0);
+
+            if (!empty($conteiners)) {
+                $texto = $conteiners->getElementsByTagName('idUnidCarga')
+                    ->item(0)
+                    ->nodeValue;
+            }
         } else {
             $texto = '';
         }
