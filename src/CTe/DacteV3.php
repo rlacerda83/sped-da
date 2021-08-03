@@ -206,7 +206,7 @@ class DacteV3 extends Common
             if (!empty($this->pSimpleGetValue($this->imp, "vTotTrib"))) {
                 $textoAdic = number_format($this->pSimpleGetValue($this->imp, "vTotTrib"), 2, ",", ".");
                 $this->textoAdic = "o valor aproximado de tributos incidentes sobre o preço deste serviço é de R$"
-                        .$textoAdic;
+                    .$textoAdic;
             }
             $this->toma4 = $this->dom->getElementsByTagName("toma4")->item(0);
             $this->toma03 = $this->dom->getElementsByTagName("toma3")->item(0);
@@ -515,6 +515,7 @@ class DacteV3 extends Common
             $r = $this->zObs($x, $y);
             $y += 15;
         }
+
         $x = $xInic;
         $r = $this->zDadosAdic($x, $y, $pag, $totPag);
 
@@ -754,15 +755,15 @@ class DacteV3 extends Common
         //0-Remetente;1-Expedidor;2-Recebedor;3-Destinatário;4 - Outros
         if ($toma==1) {
             $aFont = array(
-            'font' => $this->fontePadrao,
-            'size' => 11,
-            'style' => '');
+                'font' => $this->fontePadrao,
+                'size' => 11,
+                'style' => '');
             $this->pTextBox($x-14.5, $y2 + 3.5, $w * 0.5, $h1, 'X', $aFont, 'T', 'C', 0, '', false);
         } else {
             $aFont = array(
-            'font' => $this->fontePadrao,
-            'size' => 11,
-            'style' => '');
+                'font' => $this->fontePadrao,
+                'size' => 11,
+                'style' => '');
             $this->pTextBox($x+3.5, $y2 + 3.5, $w * 0.5, $h1, 'X', $aFont, 'T', 'C', 0, '', false);
         }
         $aFont = $this->formatNegrito;
@@ -1739,7 +1740,8 @@ class DacteV3 extends Common
         $this->pTextBox($x + 1, $y, $w, $h, $texto, $aFont, 'T', 'L', 0, '');
         $texto = $this->pSimpleGetValue($this->infCarga, "vCarga") == "" ?
             $this->pSimpleGetValue($this->infCarga, "vMerc") : $this->pSimpleGetValue($this->infCarga, "vCarga");
-        $texto = number_format($texto, 2, ",", ".");
+
+        $texto = number_format((float)$texto, 2, ",", ".");
         $aFont = $this->formatNegrito;
         $this->pTextBox($x + 1, $y + 3, $w, $h, $texto, $aFont, 'T', 'L', 0, '');
         $y += 8;
@@ -2079,7 +2081,7 @@ class DacteV3 extends Common
 
             $texto = !empty($this->ICMS->getElementsByTagName("vBCSTRet")->item(0)->nodeValue) ?
                 number_format($this->pSimpleGetValue($this->ICMS, "vBCSTRet"), 2, ",", ".") : (
-                    !empty($this->ICMS->getElementsByTagName("vBCOutraUF")->item(0)->nodeValue) ?
+                !empty($this->ICMS->getElementsByTagName("vBCOutraUF")->item(0)->nodeValue) ?
                     number_format($this->pSimpleGetValue($this->ICMS, "vBCOutraUF"), 2, ",", ".") : ''
                 );
             $aFont = $this->formatNegrito;
@@ -2088,7 +2090,7 @@ class DacteV3 extends Common
 
             $texto = !empty($this->ICMS->getElementsByTagName("pICMSSTRet")->item(0)->nodeValue) ?
                 number_format($this->pSimpleGetValue($this->ICMS, "pICMSSTRet"), 2, ",", ".") : (
-                    !empty($this->ICMS->getElementsByTagName("pICMSOutraUF")->item(0)->nodeValue) ?
+                !empty($this->ICMS->getElementsByTagName("pICMSOutraUF")->item(0)->nodeValue) ?
                     number_format($this->pSimpleGetValue($this->ICMS, "pICMSOutraUF"), 2, ",", ".") : ''
                 );
             $aFont = $this->formatNegrito;
@@ -2097,7 +2099,7 @@ class DacteV3 extends Common
 
             $texto = !empty($this->ICMS->getElementsByTagName("vICMS")->item(0)->nodeValue) ?
                 number_format($this->pSimpleGetValue($this->ICMS, "vICMS"), 2, ",", ".") : (
-                    !empty($this->ICMS->getElementsByTagName("vICMSOutraUF")->item(0)->nodeValue) ?
+                !empty($this->ICMS->getElementsByTagName("vICMSOutraUF")->item(0)->nodeValue) ?
                     number_format($this->pSimpleGetValue($this->ICMS, "vICMSOutraUF"), 2, ",", ".") : ''
                 );
             $aFont = $this->formatNegrito;
@@ -2106,8 +2108,8 @@ class DacteV3 extends Common
 
             $texto = !empty($this->ICMS->getElementsByTagName("pRedBC")->item(0)->nodeValue) ?
                 number_format($this->pSimpleGetValue($this->ICMS, "pRedBC"), 2, ",", ".") : (
-                    !empty($this->ICMS->getElementsByTagName("pRedBCOutraUF")->item(0)->nodeValue) ?
-                number_format($this->pSimpleGetValue($this->ICMS, "pRedBCOutraUF"), 2, ",", ".") : ''
+                !empty($this->ICMS->getElementsByTagName("pRedBCOutraUF")->item(0)->nodeValue) ?
+                    number_format($this->pSimpleGetValue($this->ICMS, "pRedBCOutraUF"), 2, ",", ".") : ''
                 );
             $aFont = $this->formatNegrito;
             $this->pTextBox($x, $y, $w * $wCol02, $h, $texto, $aFont, 'T', 'L', 0, '');
@@ -2125,7 +2127,7 @@ class DacteV3 extends Common
 
             $texto = !empty($this->ICMS->getElementsByTagName("vBC")->item(0)->nodeValue) ?
                 number_format($this->pSimpleGetValue($this->ICMS, "vBC"), 2, ",", ".") : (
-                    !empty($this->ICMS->getElementsByTagName("vBCOutraUF")->item(0)->nodeValue) ?
+                !empty($this->ICMS->getElementsByTagName("vBCOutraUF")->item(0)->nodeValue) ?
                     number_format($this->pSimpleGetValue($this->ICMS, "vBCOutraUF"), 2, ",", ".") : ''
                 );
             $aFont = $this->formatNegrito;
@@ -2134,7 +2136,7 @@ class DacteV3 extends Common
 
             $texto = !empty($this->ICMS->getElementsByTagName("pICMS")->item(0)->nodeValue) ?
                 number_format($this->pSimpleGetValue($this->ICMS, "pICMS"), 2, ",", ".") : (
-                    !empty($this->ICMS->getElementsByTagName("pICMSOutraUF")->item(0)->nodeValue) ?
+                !empty($this->ICMS->getElementsByTagName("pICMSOutraUF")->item(0)->nodeValue) ?
                     number_format($this->pSimpleGetValue($this->ICMS, "pICMSOutraUF"), 2, ",", ".") : ''
                 );
             $aFont = $this->formatNegrito;
@@ -2143,7 +2145,7 @@ class DacteV3 extends Common
 
             $texto = !empty($this->ICMS->getElementsByTagName("vICMS")->item(0)->nodeValue) ?
                 number_format($this->pSimpleGetValue($this->ICMS, "vICMS"), 2, ",", ".") : (
-                    !empty($this->ICMS->getElementsByTagName("vICMSOutraUF")->item(0)->nodeValue) ?
+                !empty($this->ICMS->getElementsByTagName("vICMSOutraUF")->item(0)->nodeValue) ?
                     number_format($this->pSimpleGetValue($this->ICMS, "vICMSOutraUF"), 2, ",", ".") : ''
                 );
             $aFont = $this->formatNegrito;
@@ -2152,8 +2154,8 @@ class DacteV3 extends Common
 
             $texto = !empty($this->ICMS->getElementsByTagName("pRedBC")->item(0)->nodeValue) ?
                 number_format($this->pSimpleGetValue($this->ICMS, "pRedBC"), 2, ",", ".") : (
-                    !empty($this->ICMS->getElementsByTagName("pRedBCOutraUF")->item(0)->nodeValue) ?
-                number_format($this->pSimpleGetValue($this->ICMS, "pRedBCOutraUF"), 2, ",", ".") : ''
+                !empty($this->ICMS->getElementsByTagName("pRedBCOutraUF")->item(0)->nodeValue) ?
+                    number_format($this->pSimpleGetValue($this->ICMS, "pRedBCOutraUF"), 2, ",", ".") : ''
                 );
             $aFont = $this->formatNegrito;
             $this->pTextBox($x, $y, $w * $wCol02, $h, $texto, $aFont, 'T', 'L', 0, '');
@@ -3544,7 +3546,7 @@ class DacteV3 extends Common
     {
         try {
             $fone = !empty($field->getElementsByTagName("fone")->item(0)->nodeValue) ?
-            $field->getElementsByTagName("fone")->item(0)->nodeValue : '';
+                $field->getElementsByTagName("fone")->item(0)->nodeValue : '';
             $foneLen = strlen($fone);
             if ($foneLen > 0) {
                 $fone2 = substr($fone, 0, $foneLen - 4);
