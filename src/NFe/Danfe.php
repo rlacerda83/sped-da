@@ -712,7 +712,10 @@ class Danfe extends Common
                 $hUsado = $hCabecItens;
                 // Remove canhoto para páginas secundárias em modo paisagem ('L')
                 $w2 = round($this->wPrint*0.28, 0);
-                $i--; // decrementa para readicionar o item que não coube nessa pagina na outra.
+
+                if ($this->det->length !== 1) {
+                    $i--; // decrementa para readicionar o item que não coube nessa pagina na outra.
+                }
             }
             $i++;
         } //fim da soma das areas de itens usadas
