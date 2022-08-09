@@ -1140,7 +1140,7 @@ class Danfce extends Common
         $hex = "";
         $iCount = 0;
         do {
-            $hex .= sprintf("%02x", ord($str{$iCount}));
+            $hex .= sprintf("%02x", ord($str[$iCount]));
             $iCount++;
         } while ($iCount < strlen($str));
         return $hex;
@@ -1185,7 +1185,10 @@ class Danfce extends Common
         $bin = "";
         $iCount = 0;
         do {
-            $bin .= chr(hexdec($str{$iCount}.$str{($iCount + 1)}));
+            $bin .= chr(
+                hexdec($str[$iCount].$str[($iCount + 1)])
+            );
+            
             $iCount += 2;
         } while ($iCount < strlen($str));
         return $bin;
