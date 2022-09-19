@@ -725,16 +725,21 @@ class Danfe extends Common
         $x = $xInic;
         $y = $yInic;
         //coloca o(s) canhoto(s) da NFe
-        if ($this->orientacao == 'P') {
-            for ($i = 1; $i <= $this->qCanhoto; $i++) {
-                $y = $this->pCanhoto($x, $y);
+        try {
+            if ($this->orientacao == 'P') {
+                for ($i = 1; $i <= $this->qCanhoto; $i++) {
+                    $y = $this->pCanhoto($x, $y);
+                }
+            } else {
+                for ($i = 1; $i <= $this->qCanhoto; $i++) {
+                    $this->pCanhoto($x, $y);
+                    $x = 25 * $i;
+                }
             }
-        } else {
-            for ($i = 1; $i <= $this->qCanhoto; $i++) {
-                $this->pCanhoto($x, $y);
-                $x = 25 * $i;
-            }
+        } catch (\Exception $e) {
+            // do nothing
         }
+
         //coloca o cabeçalho
         $y = $this->pCabecalhoDANFE($x, $y, $pag, $totPag);
         //coloca os dados do destinatário
@@ -3130,47 +3135,28 @@ class Danfe extends Common
         //identificação do tipo de nf entrada ou saida
         $tpNF = $this->ide->getElementsByTagName('tpNF')->item(0)->nodeValue;
 
-        $obrs = [
-            'dest',
-            'enderDest',
-            'emit'
-        ];
-
-        $skip = false;
-
-        foreach ($obrs as $obr) {
-            if (empty($obr)) {
-                $emitente = '';
-                $destinatario = '';
-                $skip = true;
-                break;
-            }
-        }
-
-        if (!$skip) {
-            if ($tpNF == '0') {
-                //NFe de Entrada
-                $emitente = '';
-                $emitente .= $this->dest->getElementsByTagName("xNome")->item(0)->nodeValue . " - ";
-                $emitente .= $this->enderDest->getElementsByTagName("xLgr")->item(0)->nodeValue . ", ";
-                $emitente .= $this->enderDest->getElementsByTagName("nro")->item(0)->nodeValue . " - ";
-                $emitente .= $this->pSimpleGetValue($this->enderDest, "xCpl", " - ", " ");
-                $emitente .= $this->enderDest->getElementsByTagName("xBairro")->item(0)->nodeValue . " ";
-                $emitente .= $this->enderDest->getElementsByTagName("xMun")->item(0)->nodeValue . "-";
-                $emitente .= $this->enderDest->getElementsByTagName("UF")->item(0)->nodeValue . "";
-                $destinatario = $this->emit->getElementsByTagName("xNome")->item(0)->nodeValue . " ";
-            } else {
-                //NFe de Saída
-                $emitente = $this->emit->getElementsByTagName("xNome")->item(0)->nodeValue . " ";
-                $destinatario = '';
-                $destinatario .= $this->dest->getElementsByTagName("xNome")->item(0)->nodeValue . " - ";
-                $destinatario .= $this->enderDest->getElementsByTagName("xLgr")->item(0)->nodeValue . ", ";
-                $destinatario .= $this->enderDest->getElementsByTagName("nro")->item(0)->nodeValue . " ";
-                $destinatario .= $this->pSimpleGetValue($this->enderDest, "xCpl", " - ", " ");
-                $destinatario .= $this->enderDest->getElementsByTagName("xBairro")->item(0)->nodeValue . " ";
-                $destinatario .= $this->enderDest->getElementsByTagName("xMun")->item(0)->nodeValue . "-";
-                $destinatario .= $this->enderDest->getElementsByTagName("UF")->item(0)->nodeValue . " ";
-            }
+        if ($tpNF == '0') {
+            //NFe de Entrada
+            $emitente = '';
+            $emitente .= $this->dest->getElementsByTagName("xNome")->item(0)->nodeValue . " - ";
+            $emitente .= $this->enderDest->getElementsByTagName("xLgr")->item(0)->nodeValue . ", ";
+            $emitente .= $this->enderDest->getElementsByTagName("nro")->item(0)->nodeValue . " - ";
+            $emitente .= $this->pSimpleGetValue($this->enderDest, "xCpl", " - ", " ");
+            $emitente .= $this->enderDest->getElementsByTagName("xBairro")->item(0)->nodeValue . " ";
+            $emitente .= $this->enderDest->getElementsByTagName("xMun")->item(0)->nodeValue . "-";
+            $emitente .= $this->enderDest->getElementsByTagName("UF")->item(0)->nodeValue . "";
+            $destinatario = $this->emit->getElementsByTagName("xNome")->item(0)->nodeValue . " ";
+        } else {
+            //NFe de Saída
+            $emitente = $this->emit->getElementsByTagName("xNome")->item(0)->nodeValue . " ";
+            $destinatario = '';
+            $destinatario .= $this->dest->getElementsByTagName("xNome")->item(0)->nodeValue . " - ";
+            $destinatario .= $this->enderDest->getElementsByTagName("xLgr")->item(0)->nodeValue . ", ";
+            $destinatario .= $this->enderDest->getElementsByTagName("nro")->item(0)->nodeValue . " ";
+            $destinatario .= $this->pSimpleGetValue($this->enderDest, "xCpl", " - ", " ");
+            $destinatario .= $this->enderDest->getElementsByTagName("xBairro")->item(0)->nodeValue . " ";
+            $destinatario .= $this->enderDest->getElementsByTagName("xMun")->item(0)->nodeValue . "-";
+            $destinatario .= $this->enderDest->getElementsByTagName("UF")->item(0)->nodeValue . " ";
         }
 
         //identificação do sistema emissor
