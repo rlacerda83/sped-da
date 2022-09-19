@@ -736,7 +736,7 @@ class Danfe extends Common
                     $x = 25 * $i;
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // do nothing
         }
 
