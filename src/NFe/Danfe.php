@@ -3129,29 +3129,50 @@ class Danfe extends Common
         //canhoto
         //identificação do tipo de nf entrada ou saida
         $tpNF = $this->ide->getElementsByTagName('tpNF')->item(0)->nodeValue;
-        if ($tpNF == '0') {
-            //NFe de Entrada
-            $emitente = '';
-            $emitente .= $this->dest->getElementsByTagName("xNome")->item(0)->nodeValue . " - ";
-            $emitente .= $this->enderDest->getElementsByTagName("xLgr")->item(0)->nodeValue . ", ";
-            $emitente .= $this->enderDest->getElementsByTagName("nro")->item(0)->nodeValue . " - ";
-            $emitente .= $this->pSimpleGetValue($this->enderDest, "xCpl", " - ", " ");
-            $emitente .= $this->enderDest->getElementsByTagName("xBairro")->item(0)->nodeValue . " ";
-            $emitente .= $this->enderDest->getElementsByTagName("xMun")->item(0)->nodeValue . "-";
-            $emitente .= $this->enderDest->getElementsByTagName("UF")->item(0)->nodeValue . "";
-            $destinatario = $this->emit->getElementsByTagName("xNome")->item(0)->nodeValue . " ";
-        } else {
-            //NFe de Saída
-            $emitente = $this->emit->getElementsByTagName("xNome")->item(0)->nodeValue . " ";
-            $destinatario = '';
-            $destinatario .= $this->dest->getElementsByTagName("xNome")->item(0)->nodeValue . " - ";
-            $destinatario .= $this->enderDest->getElementsByTagName("xLgr")->item(0)->nodeValue . ", ";
-            $destinatario .= $this->enderDest->getElementsByTagName("nro")->item(0)->nodeValue . " ";
-            $destinatario .= $this->pSimpleGetValue($this->enderDest, "xCpl", " - ", " ");
-            $destinatario .= $this->enderDest->getElementsByTagName("xBairro")->item(0)->nodeValue . " ";
-            $destinatario .= $this->enderDest->getElementsByTagName("xMun")->item(0)->nodeValue . "-";
-            $destinatario .= $this->enderDest->getElementsByTagName("UF")->item(0)->nodeValue . " ";
+
+        $obrs = [
+            'dest',
+            'enderDest',
+            'emit'
+        ];
+
+        $skip = false;
+
+        foreach ($obrs as $obr) {
+            if (empty($obr)) {
+                $emitente = '';
+                $destinatario = '';
+                $skip = true;
+                break;
+            }
         }
+
+        if (!$skip) {
+            if ($tpNF == '0') {
+                //NFe de Entrada
+                $emitente = '';
+                $emitente .= $this->dest->getElementsByTagName("xNome")->item(0)->nodeValue . " - ";
+                $emitente .= $this->enderDest->getElementsByTagName("xLgr")->item(0)->nodeValue . ", ";
+                $emitente .= $this->enderDest->getElementsByTagName("nro")->item(0)->nodeValue . " - ";
+                $emitente .= $this->pSimpleGetValue($this->enderDest, "xCpl", " - ", " ");
+                $emitente .= $this->enderDest->getElementsByTagName("xBairro")->item(0)->nodeValue . " ";
+                $emitente .= $this->enderDest->getElementsByTagName("xMun")->item(0)->nodeValue . "-";
+                $emitente .= $this->enderDest->getElementsByTagName("UF")->item(0)->nodeValue . "";
+                $destinatario = $this->emit->getElementsByTagName("xNome")->item(0)->nodeValue . " ";
+            } else {
+                //NFe de Saída
+                $emitente = $this->emit->getElementsByTagName("xNome")->item(0)->nodeValue . " ";
+                $destinatario = '';
+                $destinatario .= $this->dest->getElementsByTagName("xNome")->item(0)->nodeValue . " - ";
+                $destinatario .= $this->enderDest->getElementsByTagName("xLgr")->item(0)->nodeValue . ", ";
+                $destinatario .= $this->enderDest->getElementsByTagName("nro")->item(0)->nodeValue . " ";
+                $destinatario .= $this->pSimpleGetValue($this->enderDest, "xCpl", " - ", " ");
+                $destinatario .= $this->enderDest->getElementsByTagName("xBairro")->item(0)->nodeValue . " ";
+                $destinatario .= $this->enderDest->getElementsByTagName("xMun")->item(0)->nodeValue . "-";
+                $destinatario .= $this->enderDest->getElementsByTagName("UF")->item(0)->nodeValue . " ";
+            }
+        }
+
         //identificação do sistema emissor
         //linha separadora do canhoto
         if ($this->orientacao == 'P') {
