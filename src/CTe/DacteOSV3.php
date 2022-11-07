@@ -1281,10 +1281,10 @@ class DacteOSV3 extends Common
 
         foreach ($this->Comp as $k => $d) {
             $nome = '';
-            $obj = $this->Comp->item($k)->getElementsByTagName('xNome');
+            $obj = $this->Comp->item($k)->getElementsByTagName('xNome')->item(0);
 
             if (!empty($obj)) {
-                $nome = $obj->item(0)->nodeValue;
+                $nome = $obj->nodeValue;
             }
 
             $valor = number_format(
