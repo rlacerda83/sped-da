@@ -60,6 +60,7 @@ class DacteOS extends DaCommon
     protected $vPrest;
     protected $infServico;
     protected $aquav;
+    protected $ObsCont;
 
     protected $wAdic = 150;
     protected $textoAdic = '';
@@ -123,6 +124,7 @@ class DacteOS extends DaCommon
             $this->infOutros = $this->dom->getElementsByTagName("infOutros");
             $this->infServico = $this->dom->getElementsByTagName("infServico");
             $this->compl = $this->dom->getElementsByTagName("compl");
+            $this->ObsCont = $this->dom->getElementsByTagName("ObsCont");
             $this->ICMS = $this->dom->getElementsByTagName("ICMS")->item(0);
             $this->ICMSSN = $this->dom->getElementsByTagName("ICMSSN")->item(0);
             $this->imp = $this->dom->getElementsByTagName("imp")->item(0);
@@ -1433,10 +1435,16 @@ class DacteOS extends DaCommon
         $auxX = $oldX;
         $yIniDados = $y;
         $texto = '';
-        foreach ($this->compl as $k => $d) {
+        /*foreach ($this->compl as $k => $d) {
             $xObs = $this->getTagValue($this->compl->item($k), "xObs");
             $texto .= $xObs;
+        }*/
+
+        foreach ($this->ObsCont as $k => $d) {
+            $xObs = $this->getTagValue($this->ObsCont->item($k), "xTexto");
+            $texto .= $xObs;
         }
+
         $textoObs = explode("Motorista:", $texto);
         $textoObs[1] = isset($textoObs[1]) ? "Motorista: ".$textoObs[1]: '';
         $texto .= $this->getTagValue($this->imp, "infAdFisco", "\r\n");
