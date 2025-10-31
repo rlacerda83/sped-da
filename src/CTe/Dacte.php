@@ -1558,18 +1558,22 @@ class Dacte extends DaCommon
         //Identifica código da unidade
         //01 = KG (QUILOS)
         $qCarga = 0;
+
         foreach ($this->infQ as $infQ) {
-            if ($this->getTagValue($infQ, "tpMed") == 'Peso real') {
-                $qCarga = $this->getTagValue($infQ, "cUnid") == '01' ?
-                    $this->getTagValue($infQ, "qCarga") : $this->getTagValue($infQ, "qCarga") * 1000;
+            $tpMed = $this->getTagValue($infQ, 'tpMed');
+            $cUnid = $this->getTagValue($infQ, 'cUnid');
+            $qCarga = $this->getTagValue($infQ, 'qCarga');
+
+            if ($tpMed == 'Peso real') {
+                $qCarga = $cUnid == '01' ? $qCarga : $qCarga * 1000;
                 break;
             }
 
-            if (in_array($this->getTagValue($infQ, "cUnid"), array('01', '02'))) {
-                $qCarga += $this->getTagValue($infQ, "cUnid") == '01' ?
-                    $this->getTagValue($infQ, "qCarga") : $this->getTagValue($infQ, "qCarga") * 1000;
+            if (in_array($cUnid, ['02'])) {
+                $qCarga += ($qCarga * 1000);
             }
         }
+
         $texto = 'PESO BRUTO (KG)';
         $aFont = array(
             'font' => $this->fontePadrao,
