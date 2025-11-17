@@ -90,6 +90,11 @@ trait TraitBlocoV
             90 => 'Sem pagamento',
             99 => 'Outros',
         ];
+
+        if (!in_array($type, array_keys($lista))) {
+            $type = 99;
+        }
+
         return $lista[$type];
     }
 
