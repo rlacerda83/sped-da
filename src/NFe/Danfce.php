@@ -395,13 +395,17 @@ class Danfce extends DaCommon
         $this->enderDest = $this->dom->getElementsByTagName("enderDest")->item(0);
         $this->imposto = $this->dom->getElementsByTagName("imposto")->item(0);
         $this->ICMSTot = $this->dom->getElementsByTagName("ICMSTot")->item(0);
-        $this->tpImp = $this->ide->getElementsByTagName("tpImp")->item(0)->nodeValue;
+
+        $tpImp = $this->ide->getElementsByTagName("tpImp")->item(0);
+        $this->tpImp = is_object($tpImp) ? $tpImp->nodeValue : null;
+
         $this->infAdic = $this->dom->getElementsByTagName("infAdic")->item(0);
         $this->tpEmis = $this->dom->getValue($this->ide, "tpEmis");
         $this->infCpl = '';
         if (!empty($this->infAdic)) {
             if (!empty($this->infAdic->getElementsByTagName("infCpl")->item(0))) {
-                $this->infCpl = $this->infAdic->getElementsByTagName("infCpl")->item(0)->nodeValue;
+                $infCpl = $this->infAdic->getElementsByTagName("infCpl")->item(0);
+                $this->infCpl = is_object($infCpl) ? $infCpl->nodeValue : null;
             }
         }
         //se for o layout 4.0 busca pelas tags de detalhe do pagamento
@@ -413,10 +417,13 @@ class Danfce extends DaCommon
         } else {
             $this->pag = $this->dom->getElementsByTagName("pag");
         }
-        $this->qrCode = !empty($this->dom->getElementsByTagName('qrCode')->item(0)->nodeValue)
-            ? $this->dom->getElementsByTagName('qrCode')->item(0)->nodeValue : null;
-        $this->urlChave = !empty($this->dom->getElementsByTagName('urlChave')->item(0)->nodeValue)
-            ? $this->dom->getElementsByTagName('urlChave')->item(0)->nodeValue : null;
+
+        $qrCode = $this->dom->getElementsByTagName('qrCode')->item(0);
+        $this->qrCode = is_object($qrCode) ? $qrCode->nodeValue : null;
+
+        $urlChave = $this->dom->getElementsByTagName('urlChave')->item(0);
+        $this->urlChave = is_object($urlChave) ? $urlChave->nodeValue : null;
+
         if (!empty($this->infProt)) {
             $cStat = $this->getTagValue($this->infProt, 'cStat');
             if (!in_array($cStat, [100, 150])) {

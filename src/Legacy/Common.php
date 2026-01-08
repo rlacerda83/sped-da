@@ -16,18 +16,40 @@ class Common
      */
     protected function getTagValue($theObj, $keyName, $extraTextBefore = '', $extraTextAfter = '', $itemNum = 0)
     {
-        if (empty($theObj)) {
+        $contentValue = '';
+
+        $isEmpty = !(is_string($theObj) || is_object($theObj));
+
+        if ($isEmpty) {
             return '';
         }
-        $vct = $theObj->getElementsByTagName($keyName)->item($itemNum);
+
+        $vct = method_exists($theObj, 'getElementsByTagName')
+            ? $theObj->getElementsByTagName($keyName)->item($itemNum)
+            : null;
+
         if (isset($vct)) {
             $value = trim($vct->nodeValue);
             if (strpos($value, '&') !== false) {
                 //existe um & na string, então deve ser uma entidade
                 $value = html_entity_decode($value);
             }
-            return $extraTextBefore . $value . $extraTextAfter;
+            $contentValue = $extraTextBefore . $value . $extraTextAfter;
         }
+
+        if (!empty($contentValue) || $vct === null) {
+            return $contentValue;
+        }
+
+        foreach ($theObj->getElementsByTagName('*') as $element) {
+            $nodeName = (string) trim($element->nodeName);
+            $name = (string) $keyName;
+
+            if ($nodeName === trim($name)) {
+                return trim($element->textContent);
+            }
+        }
+
         return '';
     }
 
