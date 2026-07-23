@@ -888,12 +888,15 @@ class Pdf extends Fpdf
             $text = '';
         }
         if (is_string($text)) {
-            //remover espaços desnecessários
             $text = trim($text);
-            //converter o charset para o fpdf
-            $text = utf8_decode($text);
-            //decodifica os caracteres html no xml
-            $text = html_entity_decode($text);
+            $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        
+            if (function_exists('mb_convert_encoding')) {
+                $text = mb_convert_encoding($text, 'ISO-8859-1', 'UTF-8');
+            } else {
+                // Compatibilidade com PHP antigos
+                $text = utf8_decode($text);
+            }
         } else {
             $text = (string) $text;
         }
